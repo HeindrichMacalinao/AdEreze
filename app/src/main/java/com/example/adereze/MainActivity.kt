@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.adereze.ui.theme.AdErezeTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +18,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AdErezeTheme {
+                // Scaffold handles the basic layout structure (like top bars)
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    // We call our new Dashboard here instead of Greeting
+                    AdShieldDashboard(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -31,17 +29,27 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun AdShieldDashboard(modifier: Modifier = Modifier) {
+    // This 'state' keeps track of whether the shield is on or off
+    var isEnabled by remember { mutableStateOf(false) }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AdErezeTheme {
-        Greeting("Android")
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = if (isEnabled) "🛡️ AdEreze ACTIVE" else "⚠️ AdEreze OFF",
+            style = MaterialTheme.typography.headlineLarge
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = { isEnabled = !isEnabled },
+            modifier = Modifier.height(56.dp).width(200.dp)
+        ) {
+            Text(text = if (isEnabled) "STOP" else "START PROTECTION")
+        }
     }
 }
