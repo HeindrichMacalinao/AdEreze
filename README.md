@@ -24,5 +24,5 @@ We have successfully established the project structure and core UI.
 - **Networking:** Android `VpnService`
 
 ## 👨‍💻 Contributors
-- **@YourUsername** (Lead Developer)
-- **@FriendUsername** (Collaborator)
+- **Heindrich Macalinao** (Developer)
+- **Keith Aldueza** (Developer)
